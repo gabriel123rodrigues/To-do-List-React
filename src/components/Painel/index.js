@@ -1,10 +1,26 @@
-import React from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 import img from '../../assets/img/miranha.jpg'
+import Modal from "../modal/index.js";
+
 const Painel = () => {
 
-    return (
+    const [modalAberto, setModalAberto] = useState(false);
+
+    const abrirModal = () =>{
+        console.log("cliquei abrir modal")
+        setModalAberto(true);
+    }
+
+    const fecharModal = () =>{
+        setModalAberto(false);
+    }
+
+    return (<>
+        
         <Div>
+        <Modal isOpen={modalAberto} onClose={fecharModal}/>
+            
             <DivOverlay>
             <header>
                 <Navbar>
@@ -16,15 +32,21 @@ const Painel = () => {
                     </select>
                 </Navbar>
                 <main>
+               
                     <Section>
+                    
                         <DivContainer>
+                       
                             {/* conteudo */}
+                            <button onClick={abrirModal}>Novo</button>
                         </DivContainer>
+                        
                     </Section>
                 </main>
             </header>
             </DivOverlay>
       </Div>
+      </>
     )
 }
 
