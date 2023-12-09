@@ -8,28 +8,34 @@ const Modal = ({isOpen,onClose,children}) => {
     
     return (
         <DivOverlay>
+
         <DivContainer class="modal-container">
+           
             
-            <div class="nome">
-                <label>Nome da Tarefa:</label>
-                <input type="text" placeholder="Nome" />
-            </div>
-            <div class="observacao">
-                <label>Observação:</label>
-                <input type="text" placeholder="Observação" />
-            </div>
+            <DivTarefa>
+            <h2>Nova Tarefa</h2>
+                <Label>Nome da Tarefa:</Label>
+                <Input type="text" />
+            </DivTarefa>
+            
+            <DivObsevacao class="observacao">
+                <Label>Observação:</Label>
+                <TextArea  type="text-area"  />
+            </DivObsevacao>
+            <DivDataUrgencia>
             <div class="data">
-                <label>Data Limite:</label>
-                <input type="date" placeholder="Data" />
+                <Label>Data Limite:</Label>
+                <Input type="date" placeholder="Data" />
             </div>
-            <div>
-                <label>Urgência</label>
-                <select name="importancia">
+            <div className="importancia">
+                <Label>Urgência</Label>
+                <Select name="importancia">
                     <option>Muito urgente</option>
                     <option>Pode esperar</option>
                     <option>Um dia eu faço</option>
-                </select>
+                </Select>
             </div>
+            </DivDataUrgencia>
             <button>Salvar</button>
             <button onClick={onClose}>Cancelar</button>
 
@@ -39,6 +45,41 @@ const Modal = ({isOpen,onClose,children}) => {
         
     );
 }
+const TextArea = styled.textarea`
+height:55px;
+border-radius: 25px;
+border:none;
+`
+const Select = styled.select`
+    height:25px;
+    border-radius: 25px;
+   border:none;
+`
+const Label = styled.label`
+    margin-bottom: 10px;
+    
+`
+const DivTarefa = styled.div`
+    display: flex;
+    flex-direction: column;
+    
+`;
+const DivObsevacao = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+const Input = styled.input `
+    height:25px;
+    border-radius: 25px;
+    border: none;
+
+    
+`;
+const DivDataUrgencia = styled.div`
+    display:flex;
+    justify-content: space-between;
+
+`;
 
 
 const DivOverlay = styled.div`
@@ -56,7 +97,8 @@ const DivOverlay = styled.div`
 
 
 const DivContainer = styled.div`
-    background-color: antiquewhite;
+    background-color: rgb(0,0,0,0.7);
+   
     padding:15px;
     border-radius: 10px;
     height: 460px;
@@ -64,7 +106,8 @@ const DivContainer = styled.div`
     overflow: auto;
     display:flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    
 `;
 
 export default Modal;
