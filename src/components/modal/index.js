@@ -1,50 +1,102 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import styled from "styled-components";
-import Painel from "../Painel";
+
+import Icon from '@mdi/react';
+import { mdiCalendarRange,mdiAlertCircleOutline } from '@mdi/js';
 
 const Modal = ({isOpen,onClose,children}) => {
 
+    const [formModal, setFormModal] = useState({
+        titulo:"",
+        observacao: "",
+        data: "",
+        importancia: "",
+});
+
+    const [listaTarefas, setListaTarefas] =useState([]);
     if (!isOpen) return null;
-    
+
+    const handleIputChage = (event) =>{
+       
+        const {name,value} = event.target;
+        setFormModal({
+            ...formModal,
+            [name]:value,
+        })
+        
+    }
+    const handleSubmit = (event) =>{
+        event.preventDefault();
+
+        setListaTarefas([...listaTarefas,formModal]);
+        console.log(formModal);
+        console.log(listaTarefas);
+
+        setFormModal({
+            titulo:"",
+            observacao: "",
+            data: "",
+            importancia: "",
+        })
+    }
+
+   
     return (
         <DivOverlay>
 
-        <DivContainer class="modal-container">
+        <DivContainer class="modal-container" >
            
             
             <DivTarefa>
             <h2>Nova Tarefa</h2>
                 <Label>Nome da Tarefa:</Label>
-                <Input type="text" />
+                <Input type="text" value={formModal.titulo} onChange={handleIputChage} name="titulo" />
             </DivTarefa>
             
             <DivObsevacao class="observacao">
                 <Label>Observação:</Label>
-                <TextArea  type="text-area"  />
+                <TextArea  type="text-area"  value={formModal.observacao} onChange={handleIputChage} name="observacao"/>
             </DivObsevacao>
             <DivDataUrgencia>
-            <div class="data">
-                <Label>Data Limite:</Label>
-                <Input type="date" placeholder="Data" />
-            </div>
-            <div className="importancia">
-                <Label>Urgência</Label>
-                <Select name="importancia">
-                    <option>Muito urgente</option>
-                    <option>Pode esperar</option>
-                    <option>Um dia eu faço</option>
+            <Div>
+                <Label><Icon path={mdiCalendarRange} size={0.7} />Data Limite:</Label>
+                <Input type="date" name="data" value={formModal.data} onChange={handleIputChage} placeholder="Data" />
+            </Div>
+            <Div>
+                <Label><Icon path={mdiAlertCircleOutline} size={0.7} />Urgência</Label>
+                <Select value={formModal.importancia} onChange={handleIputChage} name="importancia" >
+                    <Option value="" selected disabled>Importância</Option>
+                    <Option>Muito urgente</Option>
+                    <Option>Pode esperar</Option>
+                    <Option>Um dia eu faço</Option>
                 </Select>
-            </div>
+            </Div>
             </DivDataUrgencia>
-            <button>Salvar</button>
-            <button onClick={onClose}>Cancelar</button>
-
+            <DivButton>
+            <Button type="submit" onClick={handleSubmit}>Salvar</Button>
+            <Button onClick={onClose}>Cancelar</Button>
+            </DivButton>
             
         </DivContainer>
         </DivOverlay>
         
     );
 }
+
+const Option = styled.option`
+    color: black;
+`
+const DivButton = styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+`
+const Button = styled.button`
+    width: 70px;
+    height: 30px;
+    color: black;
+    margin-left: 5px;
+    cursor: pointer;
+`
 const TextArea = styled.textarea`
 height:55px;
 border-radius: 25px;
@@ -52,8 +104,9 @@ border:none;
 `
 const Select = styled.select`
     height:25px;
-    border-radius: 25px;
+    border-radius: 15px;
    border:none;
+   color:black;
 `
 const Label = styled.label`
     margin-bottom: 10px;
@@ -72,12 +125,13 @@ const Input = styled.input `
     height:25px;
     border-radius: 25px;
     border: none;
+    color: black;
 
     
 `;
 const DivDataUrgencia = styled.div`
     display:flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
 `;
 
@@ -109,5 +163,9 @@ const DivContainer = styled.div`
     justify-content: space-between;
     
 `;
+const Div = styled.div`
+    display: flex;
+    flex-direction: column;
+`
 
 export default Modal;

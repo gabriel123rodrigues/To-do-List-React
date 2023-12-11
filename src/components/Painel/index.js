@@ -2,6 +2,10 @@ import React,{useState} from "react";
 import styled from "styled-components";
 import img from '../../assets/img/miranha.jpg'
 import Modal from "../modal/index.js";
+import Cards from "../Cards/index.js";
+
+import Icon from '@mdi/react';
+import { mdiPlus } from '@mdi/js';
 
 const Painel = () => {
 
@@ -25,11 +29,12 @@ const Painel = () => {
             <header>
                 <Navbar>
                     <Input type="text" placeholder="Pesquisa" />
-                    <select name="importancia">
-                        <option>Muito urgente</option>
-                        <option>Pode esperar</option>
-                        <option>Um dia eu faço</option>
-                    </select>
+                    <Select>
+                        <Option value="" selected disabled>Importância</Option>
+                        <Option>Muito urgente</Option>
+                        <Option>Pode esperar</Option>
+                        <Option>Um dia eu faço</Option>
+                    </Select>
                 </Navbar>
                 <main>
                
@@ -37,8 +42,10 @@ const Painel = () => {
                     
                         <DivContainer>
                        
-                            {/* conteudo */}
-                            <button onClick={abrirModal}>Novo</button>
+                          <Cards/>
+                            
+                            <Button onClick={abrirModal}><Icon path={mdiPlus} size={1} /></Button>
+                            
                         </DivContainer>
                         
                     </Section>
@@ -49,7 +56,9 @@ const Painel = () => {
       </>
     )
 }
-
+const Option = styled.option`
+    color: black;
+`
 const DivOverlay =styled.div`
   position: absolute;
   top: 0;
@@ -98,8 +107,25 @@ const DivContainer = styled.div`
     background-color: rgb(255, 255, 255, 0.7);
     opacity: 0.8;
     border: solid 5px black;
+    position: relative;
 
 `
+const Select = styled.select`
+    border-radius: 5px;
+    border:none;
+    color:black;
+`
+const Button = styled.button`
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: red;
+    cursor: pointer;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+`
+
 export default Painel;
 
 

@@ -15,7 +15,9 @@ function App() {
   );
 }
 const GlobalStyle = createGlobalStyle`
-font-family: 'Afacad';
-
+*{
+  font-family: 'Afacad';
+  color: white;
+}
 `
 export default App;
