@@ -1,10 +1,10 @@
-import React,{useEffect, useState} from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 
 import Icon from '@mdi/react';
 import { mdiCalendarRange,mdiAlertCircleOutline } from '@mdi/js';
 
-const Modal = ({isOpen,onClose,children}) => {
+const Modal = ({isOpen,onClose}) => {
 
     const [formModal, setFormModal] = useState({
         titulo:"",
@@ -12,8 +12,10 @@ const Modal = ({isOpen,onClose,children}) => {
         data: "",
         importancia: "",
 });
-
-    const [listaTarefas, setListaTarefas] =useState([]);
+ 
+   const [tarefas,setTarefas] = useState([]);
+   console.log(tarefas)
+    
     if (!isOpen) return null;
 
     const handleIputChage = (event) =>{
@@ -22,22 +24,28 @@ const Modal = ({isOpen,onClose,children}) => {
         setFormModal({
             ...formModal,
             [name]:value,
-        })
+        });
         
     }
     const handleSubmit = (event) =>{
         event.preventDefault();
-
-        setListaTarefas([...listaTarefas,formModal]);
+        const novaTarefa = {
+            titulo: formModal.titulo,
+            observacao: formModal.observacao,
+            data: formModal.data,
+            importancia: formModal.importancia,
+        }
+        setTarefas([...tarefas,novaTarefa]);
+       
         console.log(formModal);
-        console.log(listaTarefas);
+     
 
         setFormModal({
             titulo:"",
             observacao: "",
             data: "",
             importancia: "",
-        })
+        });
     }
 
    
@@ -99,8 +107,9 @@ const Button = styled.button`
 `
 const TextArea = styled.textarea`
 height:55px;
-border-radius: 25px;
+border-radius: 15px;
 border:none;
+color: black;
 `
 const Select = styled.select`
     height:25px;
