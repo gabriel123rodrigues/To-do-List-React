@@ -1,65 +1,70 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import img from '../../assets/img/miranha.jpg'
 import Modal from "../modal/index.js";
 import Cards from "../Cards/index.js";
-
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 
 const Painel = () => {
-
+    const [tarefas, setTarefas] = useState([]);
     const [modalAberto, setModalAberto] = useState(false);
 
-    const abrirModal = () =>{
-        console.log("cliquei abrir modal")
+    const abrirModal = () => {
+       
         setModalAberto(true);
     }
 
-    const fecharModal = () =>{
+    const fecharModal = () => {
         setModalAberto(false);
+    }
+    const tarefaHandler = (tarefa) =>{
+        
+        setTarefas ([...tarefas,tarefa]);
+        console.log(tarefas)
     }
 
     return (<>
-        
+
         <Div>
-        <Modal isOpen={modalAberto} onClose={fecharModal}/>
-            
+            <Modal isOpen={modalAberto} onClose={fecharModal} tarefaHandler={tarefaHandler} />
+
             <DivOverlay>
-            <header>
-                <Navbar>
-                    <Input type="text" placeholder="Pesquisa" />
-                    <Select>
-                        <Option value="" selected disabled>Importância</Option>
-                        <Option>Muito urgente</Option>
-                        <Option>Pode esperar</Option>
-                        <Option>Um dia eu faço</Option>
-                    </Select>
-                </Navbar>
-                <main>
-               
-                    <Section>
-                    
-                        <DivContainer>
-                       
-                          <Cards/>
-                            
-                            <Button onClick={abrirModal}><Icon path={mdiPlus} size={1} /></Button>
-                            
-                        </DivContainer>
-                        
-                    </Section>
-                </main>
-            </header>
+                <header>
+                    <Navbar>
+                        <Input type="text" placeholder="Pesquisa" />
+                        <Select>
+                            <Option value="" selected disabled>Importância</Option>
+                            <Option>Muito urgente</Option>
+                            <Option>Pode esperar</Option>
+                            <Option>Um dia eu faço</Option>
+                        </Select>
+                    </Navbar>
+                    <main>
+
+                        <Section>
+
+                            <DivContainer>
+
+                                {tarefas.map((tarefa) => <Cards />)}
+
+
+                                <Button onClick={abrirModal}><Icon path={mdiPlus} size={1} /></Button>
+
+                            </DivContainer>
+
+                        </Section>
+                    </main>
+                </header>
             </DivOverlay>
-      </Div>
-      </>
+        </Div>
+    </>
     )
 }
 const Option = styled.option`
     color: black;
 `
-const DivOverlay =styled.div`
+const DivOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -108,7 +113,9 @@ const DivContainer = styled.div`
     opacity: 0.8;
     border: solid 5px black;
     position: relative;
-
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
 `
 const Select = styled.select`
     border-radius: 5px;

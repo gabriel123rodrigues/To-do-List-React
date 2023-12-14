@@ -4,17 +4,20 @@ import styled from "styled-components";
 import Icon from '@mdi/react';
 import { mdiCalendarRange,mdiAlertCircleOutline } from '@mdi/js';
 
-const Modal = ({isOpen,onClose}) => {
+const Modal = ({isOpen,onClose,tarefaHandler}) => {
 
+    const [contador,setContador] = useState(0);
     const [formModal, setFormModal] = useState({
+        
         titulo:"",
         observacao: "",
         data: "",
         importancia: "",
 });
- 
-   const [tarefas,setTarefas] = useState([]);
-   console.log(tarefas)
+    
+   
+   
+   
     
     if (!isOpen) return null;
 
@@ -28,18 +31,18 @@ const Modal = ({isOpen,onClose}) => {
         
     }
     const handleSubmit = (event) =>{
-        event.preventDefault();
+        
         const novaTarefa = {
+            id: contador,
             titulo: formModal.titulo,
             observacao: formModal.observacao,
             data: formModal.data,
             importancia: formModal.importancia,
         }
-        setTarefas([...tarefas,novaTarefa]);
-       
-        console.log(formModal);
-     
-
+        
+    
+        setContador (contador+1);
+        tarefaHandler(novaTarefa)
         setFormModal({
             titulo:"",
             observacao: "",
@@ -81,7 +84,7 @@ const Modal = ({isOpen,onClose}) => {
             </Div>
             </DivDataUrgencia>
             <DivButton>
-            <Button type="submit" onClick={handleSubmit}>Salvar</Button>
+            <Button type="submit" onClick={()=>handleSubmit(formModal)} >Salvar</Button>
             <Button onClick={onClose}>Cancelar</Button>
             </DivButton>
             

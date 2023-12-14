@@ -2,24 +2,24 @@ import React from "react";
 import Icon from '@mdi/react';
 import { mdiCircleSmall } from '@mdi/js';
 import styled from "styled-components";
+import Modal from "../modal";
 
-const Cards = () =>{
+const Cards = ({tarefas}) =>{
 
     return (
        
-        <DivContainer className="container">
+        <DivContainer>
             <header>
-                <h2 className="titulo">Alguma coisa para fazer</h2>
-                <p className="importancia">Urgência<Icon path={mdiCircleSmall} size={1} style={{color:'red'}} /></p>
+                <h2 className="titulo">titulo</h2>
+                <p className="importancia">Urgência<Icon path={mdiCircleSmall} size={1} style={{color:'red'}} />importante</p>
             </header>
             <div>
             <h4>Observação</h4>
-            <p>Loren ipsemLoren ipsemLoren ipsemLoren ipsemLoren 
-                ipsemLoren ipsemLoren ipsemLoren ipsemLoren ipsem</p>
+            <p>observe</p>
             </div>
             <div>
                 <h5>Data limite:</h5>
-                <p>26/04/2024</p>
+                <p>pra ontem</p>
             </div>
 
         </DivContainer>
