@@ -3,6 +3,7 @@ import styled from "styled-components";
 import img from '../../assets/img/miranha.jpg'
 import Modal from "../modal/index.js";
 import Cards from "../Cards/index.js";
+import ModalEdit from "../modal/index.js";
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 
@@ -18,38 +19,45 @@ const Painel = () => {
     const fecharModal = () => {
         setModalAberto(false);
     }
-    const tarefaHandler = (tarefa) =>{
+    const addTarefa = (tarefa) =>{
         
         setTarefas ([...tarefas,tarefa]);
         console.log(tarefas)
+    }
+    const deleteTarefa = (id) =>{
+       const updateTarefas = tarefas.filter(tarefa => tarefa.id !== id);
+       setTarefas(updateTarefas);
     }
 
     return (<>
 
         <Div>
-            <Modal isOpen={modalAberto} onClose={fecharModal} tarefaHandler={tarefaHandler} />
+            <ModalEdit/>
+            <Modal isOpen={modalAberto} onClose={fecharModal} addTarefa={addTarefa} />
 
             <DivOverlay>
                 <header>
                     <Navbar>
                         <Input type="text" placeholder="Pesquisa" />
                         <Select>
-                            <Option value="" selected disabled>Importância</Option>
+                            <Option defaultValue={''} selected disabled>Importância</Option>
                             <Option>Muito urgente</Option>
                             <Option>Pode esperar</Option>
                             <Option>Um dia eu faço</Option>
                         </Select>
+                        <Button onClick={abrirModal}><Icon path={mdiPlus} size={1} /></Button>
                     </Navbar>
+                    
                     <main>
 
                         <Section>
 
                             <DivContainer>
 
-                                {tarefas.map((tarefa) => <Cards />)}
+                                {tarefas.map((tarefa) => <Cards key={tarefa.id} tarefa={tarefa} deleteTarefa={deleteTarefa}/>)}
 
 
-                                <Button onClick={abrirModal}><Icon path={mdiPlus} size={1} /></Button>
+                               
 
                             </DivContainer>
 
@@ -116,6 +124,7 @@ const DivContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
+    justify-content: center;
 `
 const Select = styled.select`
     border-radius: 5px;
@@ -128,9 +137,10 @@ const Button = styled.button`
     border-radius: 50%;
     background-color: red;
     cursor: pointer;
-    position: absolute;
+   
     bottom: 15px;
     right: 15px;
+  
 `
 
 export default Painel;

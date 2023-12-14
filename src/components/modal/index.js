@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Icon from '@mdi/react';
 import { mdiCalendarRange,mdiAlertCircleOutline } from '@mdi/js';
 
-const Modal = ({isOpen,onClose,tarefaHandler}) => {
+const Modal = ({isOpen,onClose,addTarefa}) => {
 
     const [contador,setContador] = useState(0);
     const [formModal, setFormModal] = useState({
@@ -42,7 +42,7 @@ const Modal = ({isOpen,onClose,tarefaHandler}) => {
         
     
         setContador (contador+1);
-        tarefaHandler(novaTarefa)
+        addTarefa(novaTarefa)
         setFormModal({
             titulo:"",
             observacao: "",
@@ -84,8 +84,8 @@ const Modal = ({isOpen,onClose,tarefaHandler}) => {
             </Div>
             </DivDataUrgencia>
             <DivButton>
-            <Button type="submit" onClick={()=>handleSubmit(formModal)} >Salvar</Button>
-            <Button onClick={onClose}>Cancelar</Button>
+            <Button type="submit" onClick={()=>handleSubmit(formModal)} style={{backgroundColor:"#51FC72"}} >Salvar</Button>
+            <Button onClick={onClose} style={{backgroundColor:"#FE1E50"}}>Cancelar</Button>
             </DivButton>
             
         </DivContainer>
@@ -107,6 +107,9 @@ const Button = styled.button`
     color: black;
     margin-left: 5px;
     cursor: pointer;
+    border: none;
+   
+    font-size: 15px;
 `
 const TextArea = styled.textarea`
 height:55px;
