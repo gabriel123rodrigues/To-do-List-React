@@ -3,13 +3,15 @@ import styled from "styled-components";
 import img from '../../assets/img/miranha.jpg'
 import Modal from "../modal/index.js";
 import Cards from "../Cards/index.js";
-import ModalEdit from "../modal/index.js";
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
+
 
 const Painel = () => {
     const [tarefas, setTarefas] = useState([]);
     const [modalAberto, setModalAberto] = useState(false);
+    const [busca,setBusca] = useState('');
+   
 
     const abrirModal = () => {
        
@@ -22,24 +24,50 @@ const Painel = () => {
     const addTarefa = (tarefa) =>{
         
         setTarefas ([...tarefas,tarefa]);
-        console.log(tarefas)
+     
     }
     const deleteTarefa = (id) =>{
        const updateTarefas = tarefas.filter(tarefa => tarefa.id !== id);
        setTarefas(updateTarefas);
     }
 
+    
+
+    const editTarefa = (editedItem) =>{
+        
+        
+        const updateTasks = tarefas.map((tarefa)=>
+        tarefa.id === editedItem.id ? editedItem :tarefa);
+        setTarefas(updateTasks);
+        console.log(tarefas);
+    }
+    
+
+    const filterTarefasPesquisa = () =>{
+        const lowerBusca = busca.toLowerCase()
+        return tarefas.filter((tarefa)=> 
+        tarefa.titulo.toLowerCase().includes(lowerBusca));
+    }
+    const filterTarefasImportancia = () =>{
+        return tarefas.filter((tarefa)=>{
+            tarefa.importancia.toLowerCase().includes(busca);
+        })
+    }
+    
+
+    
+
     return (<>
 
         <Div>
-            <ModalEdit/>
+           
             <Modal isOpen={modalAberto} onClose={fecharModal} addTarefa={addTarefa} />
 
             <DivOverlay>
                 <header>
                     <Navbar>
-                        <Input type="text" placeholder="Pesquisa" />
-                        <Select>
+                        <Input type="text" placeholder="Pesquisa" value={busca} onChange={(ev)=>setBusca(ev.target.value)} />
+                        <Select value={busca} onChange={(ev)=>setBusca(ev.target.value)}>
                             <Option defaultValue={''} selected disabled>Importância</Option>
                             <Option>Muito urgente</Option>
                             <Option>Pode esperar</Option>
@@ -54,7 +82,7 @@ const Painel = () => {
 
                             <DivContainer>
 
-                                {tarefas.map((tarefa) => <Cards key={tarefa.id} tarefa={tarefa} deleteTarefa={deleteTarefa}/>)}
+                                {filterTarefasImportancia().filterTarefasPesquisa().map((tarefa) => <Cards key={tarefa.id}  editTarefa={editTarefa} tarefa={tarefa} deleteTarefa={deleteTarefa}/>)}
 
 
                                
@@ -82,12 +110,12 @@ const DivOverlay = styled.div`
 `
 
 const Div = styled.div`
-        background-image: url(${img});
-        background-size: cover;
-        background-repeat: no-repeat;
-        width: 100vw;
-        height: 100vh;
-        position: relative;
+  background-image: url(${img});
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 
 `;
 const Navbar = styled.nav`
@@ -103,6 +131,7 @@ const Input = styled.input`
     height: 45px;
     border-radius: 5px;
     border:none;
+    color:black;
 
 `;
 

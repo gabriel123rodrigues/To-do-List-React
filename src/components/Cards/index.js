@@ -1,15 +1,28 @@
-import React from "react";
+import {React,useState} from "react";
 import Icon from '@mdi/react';
 import { mdiCircleSmall,mdiDeleteOffOutline,mdiPencil  } from '@mdi/js';
 import styled from "styled-components";
-import Modal from "../modal";
+
+import ModalEdit from "../ModalEdit/index.js"; 
+
+
+const Cards = ({ tarefa,deleteTarefa,editTarefa }) => {
 
 
 
-const Cards = ({ tarefa,deleteTarefa }) => {
+    const [modalEdit, setModalEdit ] = useState(false);
 
-    return (
+    const abrirModalEdit = () =>{
 
+        setModalEdit(true);
+    }
+    const fecharModalEdit =()=>{
+
+        setModalEdit(false);
+    }
+    return (<>
+
+       <ModalEdit isOpen={modalEdit} onClose={fecharModalEdit} editTarefa={editTarefa} tarefa={tarefa}></ModalEdit>
         <DivContainer>
             <header>
                 <h2 className="titulo">{tarefa.titulo}</h2>
@@ -25,11 +38,11 @@ const Cards = ({ tarefa,deleteTarefa }) => {
             </div>
             <div style={{display:"flex", justifyContent:"flex-end",paddingTop:"3px",paddingBottom:"0px"}}>
             <Button onClick={()=>deleteTarefa(tarefa.id)}><Icon path={ mdiDeleteOffOutline } size={1} /></Button>
-            <Button ><Icon path= { mdiPencil } size={1} /></Button>
+            <Button onClick={abrirModalEdit}><Icon path= { mdiPencil } size={1} /></Button>
             </div>
 
         </DivContainer>
-
+        </>
     )
 
 }
