@@ -12,6 +12,7 @@ const Painel = () => {
     const [modalAberto, setModalAberto] = useState(false);
     const [busca,setBusca] = useState('');
    
+   
 
     const abrirModal = () => {
        
@@ -43,21 +44,20 @@ const Painel = () => {
     }
     
 
-    const filterTarefasPesquisa = () =>{
-        const lowerBusca = busca.toLowerCase()
+    const filterText = () =>{
+        const lowerBusca = busca.toLowerCase();
         return tarefas.filter((tarefa)=> 
         tarefa.titulo.toLowerCase().includes(lowerBusca));
     }
-    const filterTarefasImportancia = () =>{
-        return tarefas.filter((tarefa)=>{
-            tarefa.importancia.toLowerCase().includes(busca);
-        })
-    }
+    
+  
+
+   
     
 
-    
 
-    return (<>
+    return (
+    <>
 
         <Div>
            
@@ -67,12 +67,7 @@ const Painel = () => {
                 <header>
                     <Navbar>
                         <Input type="text" placeholder="Pesquisa" value={busca} onChange={(ev)=>setBusca(ev.target.value)} />
-                        <Select value={busca} onChange={(ev)=>setBusca(ev.target.value)}>
-                            <Option defaultValue={''} selected disabled>Importância</Option>
-                            <Option>Muito urgente</Option>
-                            <Option>Pode esperar</Option>
-                            <Option>Um dia eu faço</Option>
-                        </Select>
+                        
                         <Button onClick={abrirModal}><Icon path={mdiPlus} size={1} /></Button>
                     </Navbar>
                     
@@ -82,7 +77,7 @@ const Painel = () => {
 
                             <DivContainer>
 
-                                {filterTarefasImportancia().filterTarefasPesquisa().map((tarefa) => <Cards key={tarefa.id}  editTarefa={editTarefa} tarefa={tarefa} deleteTarefa={deleteTarefa}/>)}
+                                {filterText().map((tarefa) => <Cards key={tarefa.id}  editTarefa={editTarefa} tarefa={tarefa} deleteTarefa={deleteTarefa}/>)}
 
 
                                
